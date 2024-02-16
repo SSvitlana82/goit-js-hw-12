@@ -12,44 +12,72 @@ const simpleLightbox = new SimpleLightbox('.list-gallery a', {
 const textInput = document.querySelector('.form-input');
 const searchForm = document.querySelector('#form');
 const loaderElem = document.querySelector('.loader');
+const loadMoreBtn = document.querySelector('.load-more');
 
 searchForm.addEventListener('submit', onSearch);
-
-function onSearch(event) {
+loadMoreBtn.addEventListener('click', onShowMore);
+let query;
+let page;
+async function onSearch(event) {
   event.preventDefault();
-  const value = textInput.value.trim();
-  if (!value) {
+  query = textInput.value.trim();
+  if (!query) {
     console.log('заповніть поле');
     return;
   }
   console.dir(textInput);
   showLoader();
-  searchImages(value)
-    .then(data => {
-      console.log(data);
-      if (!data.hits.length) {
-        iziToast.error({
-          position: 'topCenter',
-          backgroundColor: 'red',
-          title: 'Error',
-          message:
-            'Sorry, there are no images matching your search query. Please try again!',
-        });
-      }
-      galleryList.innerHTML = '';
-      showGalleryMarkup(data.hits);
-      simpleLightbox.refresh();
-    })
-    .catch(error => {
-      console.log(error);
-    })
-    .finally(() => {
-      hideLoader();
-    });
+  page = 1;
+  try {
+    const data = await searchImages(query, page);
+    console.log(data);
+    if (!data.hits.length) {
+      iziToast.error({
+        position: 'topCenter',
+        backgroundColor: 'red',
+        title: 'Error',
+        message:
+          'Sorry, there are no images matching your search query. Please try again!',
+      });
+    }
+    galleryList.innerHTML = '';
+    showGalleryMarkup(data.hits);
+    simpleLightbox.refresh();
+  } catch (error) {
+    console.log(error);
+  }
+  hideLoader();
 }
+console.log(loadMoreBtn);
+async function onShowMore(event) {
+  page += 1;
+  console.log('hello');
+  showLoader();
+  try {
+    const data = await searchImages(query, page);
+    console.log(data);
+
+    showGalleryMarkup(data.hits);
+    simpleLightbox.refresh();
+  } catch (error) {
+    console.log(error);
+  }
+  hideLoader();
+}
+
 function showLoader() {
   loaderElem.classList.remove('hidden');
 }
 function hideLoader() {
   loaderElem.classList.add('hidden');
+}
+function showBtn() {}
+function hideBtn() {}
+
+function updateVisibleBtnStatus() {
+  if ('вставь параметр') {
+    showBtn();
+  } else {
+    hideBtn();
+  }
 }

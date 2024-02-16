@@ -13,23 +13,23 @@ export function showGalleryMarkup(dataArray) {
       } = item;
       return ` 
     <li class = "gallery-item">
-        <a href="${largeImageURL}"> <img src="${webformatURL}" alt="${tags}" />
-        <ul class = "image-desc">
-          <li>
-            <h3 class = "image-desc-label">likes</h3>
-            <p>${likes}</p>
+        <a href="${largeImageURL}"> <img class = "gallery-image" src="${webformatURL}" alt="${tags}" />
+        <ul class = "gallery-info">
+          <li class = "gallery-infoItem">
+            <h3 class = "gallery-infoTitle">likes</h3>
+            <p class="gallery-infoText">${likes}</p>
           </li>
-          <li>
-            <h3 class = "image-desc-label">views</h3>
-            <p>${views}</p>
+          <li class = "gallery-infoItem">
+            <h3 class = "gallery-infoTitle">views</h3>
+            <p class="gallery-infoText">${views}</p>
           </li>
-          <li>
-            <h3 class = "image-desc-label">comments</h3>
-            <p>${comments}</p>
+          <li class = "gallery-infoItem">
+            <h3 class = "gallery-infoTitle">comments</h3>
+            <p class="gallery-infoText">${comments}</p>
           </li>
-          <li>
-            <h3 class = "image-desc-label">downloads</h3>
-            <p>${downloads}</p>
+          <li class = "gallery-infoItem">
+            <h3 class = "gallery-infoTitle">downloads</h3>
+            <p class="gallery-infoText">${downloads}</p>
           </li>
         </ul>
         </a>
