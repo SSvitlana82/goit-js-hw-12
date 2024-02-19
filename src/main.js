@@ -71,13 +71,28 @@ function showLoader() {
 function hideLoader() {
   loaderElem.classList.add('hidden');
 }
-function showBtn() {}
-function hideBtn() {}
+function showBtn() {
+  loadMoreBtn.remove('hidden');
+}
+function hideBtn() {
+  loadMoreBtn.add('hidden');
+}
 
 function updateVisibleBtnStatus() {
-  if ('вставь параметр') {
+  let maxPages = Math.ceil(data.hits / page);
+
+  let lastPage = maxPages === data.hits;
+  if (!lastPage) {
     showBtn();
   } else {
     hideBtn();
+    /*  iziToast.info {
+      position: 'topCenter',
+      overlay: false,
+      color: 'White',
+      backgroundColor: 'black'
+      message: "We're sorry, but you've reached the end of search results.",
+    } */
   }
+  updateVisibleBtnStatus();
 }
