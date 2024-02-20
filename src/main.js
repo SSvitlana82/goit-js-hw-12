@@ -18,8 +18,10 @@ searchForm.addEventListener('submit', onSearch);
 loadMoreBtn.addEventListener('click', onShowMore);
 let query;
 let page;
+
 async function onSearch(event) {
   event.preventDefault();
+
   query = textInput.value.trim();
   if (!query) {
     console.log('заповніть поле');
@@ -44,6 +46,7 @@ async function onSearch(event) {
     galleryList.innerHTML = '';
     showGalleryMarkup(data.hits);
     simpleLightbox.refresh();
+    updateVisibleBtnStatus();
   } catch (error) {
     console.log(error);
   }
@@ -51,11 +54,12 @@ async function onSearch(event) {
 }
 console.log(loaderElem.classList);
 console.log(loadMoreBtn.classList);
+
 async function onShowMore(event) {
   page += 1;
   console.log('hello');
   showLoader();
-  updateVisibleBtnStatus();
+  showBtn();
   try {
     const data = await searchImages(query, page);
     console.log(data);
@@ -66,7 +70,8 @@ async function onShowMore(event) {
     console.log(error);
   }
   hideLoader();
-  console.log(updateVisibleBtnStatus());
+  hideBtn();
+  updateVisibleBtnStatus();
 }
 
 function showLoader() {
@@ -84,8 +89,8 @@ function hideBtn() {
 
 function updateVisibleBtnStatus() {
   let maxPages = Math.ceil(data.totalHits / data.hits.length);
-  console.log(maxPages);
-  let lastPage = maxPages === data.totalHits;
+
+  let lastPage = maxPages === page;
   if (!lastPage) {
     showBtn();
   } else {

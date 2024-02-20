@@ -11,7 +11,7 @@ export default async function searchImages(q, page) {
     orientation: 'horizontal',
     safesearch: true,
     page: page,
-    per_page: 15,
+    per_page: 50,
   };
   const response = await axios.get(BASE_URL, { params });
   return response.data;

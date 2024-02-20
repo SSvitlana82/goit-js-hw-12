@@ -21,11 +21,12 @@
 .hidden {
   display: none;
 }
-.load-more {
+/* .load-more {
   display: none;
-}
+} */
 
 .btn {
+  display: flex;
   text-align: center;
   margin: 0 auto;
   margin-top: 32px;
