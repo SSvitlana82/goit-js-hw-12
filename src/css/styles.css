@@ -21,15 +21,27 @@
 .hidden {
   display: none;
 }
+.load-more {
+  display: flex;
+}
+
+.btn {
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 32px;
+}
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-.form {
-  display: flex;
+form {
+  /* display: flex; */
+  text-align: center;
   margin: 0 auto;
   margin-bottom: 32px;
   min-width: 380px;
-  margin-left: 530px;
+}
+ul {
+  list-style: none;
 }
 
 .gallery {
@@ -102,7 +114,7 @@
   color: #2e2f42;
 }
 
-.form--input {
+.form-input {
   margin-right: 4px;
   font-family: var(--font-family);
   font-weight: 400;
@@ -118,11 +130,11 @@
   height: 40px;
 }
 
-.form--input:hover {
+.form-input:hover {
   border: 1px solid #000;
 }
 
-.form--input:active {
+.form-input:active {
   border: 1px solid #4e75ff;
   color: #000;
 }

@@ -40,6 +40,7 @@ async function onSearch(event) {
           'Sorry, there are no images matching your search query. Please try again!',
       });
     }
+
     galleryList.innerHTML = '';
     showGalleryMarkup(data.hits);
     simpleLightbox.refresh();
@@ -48,7 +49,8 @@ async function onSearch(event) {
   }
   hideLoader();
 }
-console.log(loadMoreBtn);
+console.log(loaderElem.classList);
+console.log(loadMoreBtn.classList);
 async function onShowMore(event) {
   page += 1;
   console.log('hello');
@@ -72,16 +74,16 @@ function hideLoader() {
   loaderElem.classList.add('hidden');
 }
 function showBtn() {
-  loadMoreBtn.remove('hidden');
+  loadMoreBtn.classList.remove('load-more');
 }
 function hideBtn() {
-  loadMoreBtn.add('hidden');
+  loadMoreBtn.classList.add('load-more');
 }
 
 function updateVisibleBtnStatus() {
-  let maxPages = Math.ceil(data.hits / page);
+  let maxPages = Math.ceil(data.totalHits / data.hits.length);
 
-  let lastPage = maxPages === data.hits;
+  let lastPage = maxPages === data.totalHits;
   if (!lastPage) {
     showBtn();
   } else {
