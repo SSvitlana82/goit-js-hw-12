@@ -55,6 +55,7 @@ async function onShowMore(event) {
   page += 1;
   console.log('hello');
   showLoader();
+  updateVisibleBtnStatus();
   try {
     const data = await searchImages(query, page);
     console.log(data);
@@ -65,6 +66,7 @@ async function onShowMore(event) {
     console.log(error);
   }
   hideLoader();
+  console.log(updateVisibleBtnStatus());
 }
 
 function showLoader() {
@@ -82,19 +84,18 @@ function hideBtn() {
 
 function updateVisibleBtnStatus() {
   let maxPages = Math.ceil(data.totalHits / data.hits.length);
-
+  console.log(maxPages);
   let lastPage = maxPages === data.totalHits;
   if (!lastPage) {
     showBtn();
   } else {
     hideBtn();
-    /*  iziToast.info {
+    iziToast.show({
       position: 'topCenter',
       overlay: false,
       color: 'White',
-      backgroundColor: 'black'
+      backgroundColor: 'black',
       message: "We're sorry, but you've reached the end of search results.",
-    } */
+    });
   }
-  updateVisibleBtnStatus();
 }

@@ -22,7 +22,7 @@
   display: none;
 }
 .load-more {
-  display: flex;
+  display: none;
 }
 
 .btn {
