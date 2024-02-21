@@ -1,4 +1,4 @@
-import searchImages from './js/pixabay-api';
+import { searchImages, per_page } from './js/pixabay-api';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import { showGalleryMarkup, galleryList } from './js/render-functions';
@@ -18,21 +18,22 @@ searchForm.addEventListener('submit', onSearch);
 loadMoreBtn.addEventListener('click', onShowMore);
 let query;
 let page;
+let totalHits;
 
 async function onSearch(event) {
   event.preventDefault();
 
   query = textInput.value.trim();
   if (!query) {
-    console.log('заповніть поле');
     return;
   }
-  console.dir(textInput);
+
   showLoader();
   page = 1;
   try {
     const data = await searchImages(query, page);
-    console.log(data);
+
+    totalHits = data.totalHits;
     if (!data.hits.length) {
       iziToast.error({
         position: 'topCenter',
@@ -42,7 +43,7 @@ async function onSearch(event) {
           'Sorry, there are no images matching your search query. Please try again!',
       });
     }
-
+    showBtn();
     galleryList.innerHTML = '';
     showGalleryMarkup(data.hits);
     simpleLightbox.refresh();
@@ -52,14 +53,12 @@ async function onSearch(event) {
   }
   hideLoader();
 }
-console.log(loaderElem.classList);
-console.log(loadMoreBtn.classList);
 
-async function onShowMore(event) {
+async function onShowMore() {
   page += 1;
-  console.log('hello');
+
   showLoader();
-  showBtn();
+  updateVisibleBtnStatus();
   try {
     const data = await searchImages(query, page);
     console.log(data);
@@ -70,8 +69,6 @@ async function onShowMore(event) {
     console.log(error);
   }
   hideLoader();
-  hideBtn();
-  updateVisibleBtnStatus();
 }
 
 function showLoader() {
@@ -81,25 +78,23 @@ function hideLoader() {
   loaderElem.classList.add('hidden');
 }
 function showBtn() {
-  loadMoreBtn.classList.remove('load-more');
+  loadMoreBtn.classList.remove('hidden');
 }
 function hideBtn() {
-  loadMoreBtn.classList.add('load-more');
+  loadMoreBtn.classList.add('hidden');
 }
 
 function updateVisibleBtnStatus() {
-  let maxPages = Math.ceil(data.totalHits / data.hits.length);
+  let maxPages = Math.ceil(totalHits / per_page);
 
-  let lastPage = maxPages === page;
+  let lastPage = maxPages <= page;
   if (!lastPage) {
     showBtn();
   } else {
     hideBtn();
-    iziToast.show({
+    iziToast.info({
       position: 'topCenter',
       overlay: false,
-      color: 'White',
-      backgroundColor: 'black',
       message: "We're sorry, but you've reached the end of search results.",
     });
   }

@@ -18,19 +18,15 @@
   }
 }
 
-.hidden {
-  display: none;
-}
-/* .load-more {
-  display: none;
-} */
-
-.btn {
+.load-more {
   display: flex;
   text-align: center;
   margin: 0 auto;
   margin-top: 32px;
 }
+
+/* .btn {
+} */
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
@@ -138,4 +134,7 @@ ul {
 .form-input:active {
   border: 1px solid #4e75ff;
   color: #000;
+}
+.hidden {
+  display: none;
 }

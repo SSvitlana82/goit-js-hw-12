@@ -1,17 +1,16 @@
 export const galleryList = document.querySelector('.list-gallery');
-export function showGalleryMarkup(dataArray) {
-  const markup = dataArray
-    .map(item => {
-      const {
-        webformatURL,
-        largeImageURL,
-        tags,
-        likes,
-        views,
-        comments,
-        downloads,
-      } = item;
-      return ` 
+
+function cardTemplate(item) {
+  const {
+    webformatURL,
+    largeImageURL,
+    tags,
+    likes,
+    views,
+    comments,
+    downloads,
+  } = item;
+  return ` 
     <li class = "gallery-item">
         <a href="${largeImageURL}"> <img class = "gallery-image" src="${webformatURL}" alt="${tags}" />
         <ul class = "gallery-info">
@@ -35,7 +34,9 @@ export function showGalleryMarkup(dataArray) {
         </a>
       </li>
         `;
-    })
-    .join('');
+}
+
+export function showGalleryMarkup(dataArray) {
+  const markup = dataArray.map(cardTemplate).join('');
   galleryList.insertAdjacentHTML('beforeend', markup);
 }
