@@ -65,6 +65,11 @@ async function onShowMore() {
 
     showGalleryMarkup(data.hits);
     simpleLightbox.refresh();
+    const height = galleryList.firstElementChild.getBoundingClientRect().height;
+    scrollBy({
+      behavior: 'smooth',
+      top: height * 2,
+    });
   } catch (error) {
     console.log(error);
   }
