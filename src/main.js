@@ -5,17 +5,15 @@ import { showGalleryMarkup, galleryList } from './js/render-functions';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
+import { showLoader, hideLoader, showBtn, hideBtn } from './js/helpers';
+import { loadMoreBtn } from './js/refs';
+
 const simpleLightbox = new SimpleLightbox('.list-gallery a', {
   /* options */
 });
 
-const textInput = document.querySelector('.form-input');
-const searchForm = document.querySelector('#form');
-const loaderElem = document.querySelector('.loader');
-const loadMoreBtn = document.querySelector('.load-more');
-
 searchForm.addEventListener('submit', onSearch);
-loadMoreBtn.addEventListener('click', onShowMore);
+/* loadMoreBtn.addEventListener('click', onShowMore); */
 let query;
 let page;
 let totalHits;
@@ -76,19 +74,6 @@ async function onShowMore() {
   hideLoader();
 }
 
-function showLoader() {
-  loaderElem.classList.remove('hidden');
-}
-function hideLoader() {
-  loaderElem.classList.add('hidden');
-}
-function showBtn() {
-  loadMoreBtn.classList.remove('hidden');
-}
-function hideBtn() {
-  loadMoreBtn.classList.add('hidden');
-}
-
 function updateVisibleBtnStatus() {
   let maxPages = Math.ceil(totalHits / per_page);
 
@@ -104,3 +89,16 @@ function updateVisibleBtnStatus() {
     });
   }
 }
+
+let callback = (entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      onShowMore();
+    }
+  });
+};
+let observer = new IntersectionObserver(callback, {
+  rootMargin: '500px',
+  threshold: 1.0,
+});
+observer.observe(loadMoreBtn);
